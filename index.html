@@ -9,7 +9,7 @@
     </head>
     <body>
 
-        <main class="container">
+        <main class="container-fluid" ng-app="ReviewApp" ng-controller="ReviewCtrl">
             <section>
                 <img src="img/super-bass-o-matic-76.jpg" alt="product picture" class="product-picture">
                 <h1>The Super Bass-o-Matic '76</h1>
@@ -18,6 +18,38 @@
 
             <section>
                 <h2>Add a Comment</h2>
+                <form ng-submit="addReview(currentReview)" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="comment-title"class="col-sm-1 control-label">Title</label>
+                        <div class="col-sm-5">
+                            <input type="text" id="comment-title" class="form-control"
+                               placeholder="Title of Comment" ng-model="currentReview.title"/>
+                        </div>
+                        <label for="comment-name" class="col-sm-2 control-label">Your Name</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="comment-name" class="form-control "
+                               placeholder="Your Name" ng-model="currentReview.name"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-body" class="control-label col-sm-1">Comment Content</label>
+                        <div class ="col-sm-11">
+                            <textarea type="text" id="comment-body" class="form-control"
+                               placeholder="Type in your full comment here" ng-model="currentReview.body"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="rating" class="control-label col-sm-1">Rating</label>
+                        <div class="col-sm-11">
+                            <rating id="comment-rating" ng-model="currentReview.rating" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+                            <span ng-show="overStar">{{hoverRating}}, "{{hoverMessage}}"</span>    
+                        </div>
+                    </div>
+                    <div class="form-group" id="buttonDiv">
+                        <button type="submit" class="btn btn-primary" ng-disabled="inserting">Add Task</button>
+                        <img src="img/ajax-loader.gif" alt="loading animation" ng-if="addingReview"/>
+                    </div>
+                </form>
                 <!--  
                 put a form here for entering a new comment
                 the user must select a rating, and enter a name, title, and comment body
@@ -27,14 +59,25 @@
                 their script file is included below
                 -->
             </section>
-
+            <hr />
             <section>
                 <h2>Comments</h2>
-                <!-- 
-                display existing comments here
-                each comment should also have UI allowing the user to vote up/down the comment
-                as well as delete it
-                 -->
+                <div class="singleReview" ng-repeat="review in reviews | orderBy:'-score'">
+                    <div class="btnDiv">
+                        <span class="commentRating">Comment Score: {{negativeTest(review.score, review.objectId)}}</span>
+                        <btn class="btn btn-success" ng-click="incrimentScore(1, review.objectId, review.score)">[ + ]</btn>
+                        <btn class="btn btn-warning" ng-click="incrimentScore(-1, review.objectId, review.score)">[ - ]</btn>
+                    </div>
+                    <h3 class="title">{{review.title}}</h3>
+                    <p class="name">Author: {{review.name}}</p>
+                    <hr />
+                    <p class="body">{{review.body}}</p>
+                    <hr />
+                    <p class="rating">Star Rating: {{review.rating}} / 5</p>
+                    <img src="img/ajax-spinner-sm.gif" alt="loading animation" ng-if="deleting"/>
+                    <btn class="btn btn-danger" ng-click="deleteReview(review.objectId)">[ Delete ]</btn>
+                </div>
+
             </section>
 
         </main>

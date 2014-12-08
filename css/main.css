@@ -5,9 +5,46 @@ body {
     font-weight: 400;
 }
 
+h3 {
+	margin: 0;
+	text-align: center;
+}
+
+.btn-danger {
+	float: right;
+}
+
+.btnDiv {
+	float: right;
+}
+
+.commentRating {
+	margin-right: 5px;
+}
+
+.name {
+	text-align: center;
+	font-size: 11px;
+}
+
 .product-picture {
     float: left;
     height: 130px;
     margin-right: 10px;
 }
 
+.rating {
+	display: inline-block;
+}
+
+.singleReview {
+	border: 3px solid black;
+	border-radius: 5px;
+	padding: 1em;
+	margin-bottom: 15px;
+	overflow: hidden;
+}
+
+#buttonDiv {
+	text-align: center;
+}
