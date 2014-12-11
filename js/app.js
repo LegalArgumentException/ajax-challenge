@@ -74,6 +74,7 @@ angular.module('ReviewApp', ['ui.bootstrap'])
                 })
                 .finally(function() {
                     $scope.addingReview = false;
+                    $scope.refreshReviews();
                 });
 		}
 
